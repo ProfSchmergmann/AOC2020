@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.util.ArrayList;
 
+// TODO!
 public class Day4 extends Day {
 
     private final ArrayList<Passport> passports;
