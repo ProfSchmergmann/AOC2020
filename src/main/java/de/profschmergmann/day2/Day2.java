@@ -13,7 +13,7 @@ public class Day2 extends Day {
     @Override
     public String resultPartOne() {
         AtomicInteger counter = new AtomicInteger(0);
-        input.forEach(s -> {
+        this.input.forEach(s -> {
             // Split at "-" for the start index
             int start = Integer.parseInt(s.split("-")[0]);
             // Split at "-" then at " " for the end index
@@ -38,7 +38,7 @@ public class Day2 extends Day {
     @Override
     public String resultPartTwo() {
         AtomicInteger counter = new AtomicInteger(0);
-        input.forEach(s -> {
+        this.input.forEach(s -> {
             // Split at "-" for the start index
             int start = Integer.parseInt(s.split("-")[0]) - 1;
             // Split at "-" then at " " for the end index

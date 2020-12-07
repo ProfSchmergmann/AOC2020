@@ -17,19 +17,19 @@ public class Day3 extends Day {
         this.sizeOfLines = arrayList.size() * 10;
         this.sizeOfArray = arrayList.size();
         // Geology array, where true means a tree an false means a free space
-        this.geology = new boolean[sizeOfArray][sizeOfLines];
+        this.geology = new boolean[this.sizeOfArray][this.sizeOfLines];
         for (int i = 0; i < this.geology.length; i++) {
             char[] tmp2 = arrayList.get(i).toCharArray();
-            char[] tmp = new char[sizeOfLines];
+            char[] tmp = new char[this.sizeOfLines];
             int tmp2Counter = 0;
-            for (int k = 0; k < sizeOfLines; k++) {
+            for (int k = 0; k < this.sizeOfLines; k++) {
                 tmp[k] = tmp2[tmp2Counter];
                 tmp2Counter++;
                 if (tmp2Counter == tmp2.length) {
                     tmp2Counter = 0;
                 }
             }
-            for (int j = 0; j < sizeOfLines; j++) {
+            for (int j = 0; j < this.sizeOfLines; j++) {
                 if (tmp[j] == '#') {
                     this.geology[i][j] = true;
                 }

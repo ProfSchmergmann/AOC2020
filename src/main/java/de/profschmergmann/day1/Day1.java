@@ -14,7 +14,7 @@ public class Day1 extends Day {
     @Override
     public String resultPartOne() {
         ArrayList<Integer> ints = new ArrayList<>();
-        input.forEach(s -> ints.add(Integer.parseInt(s)));
+        this.input.forEach(s -> ints.add(Integer.parseInt(s)));
         StringBuilder res = new StringBuilder();
         for (int i = 0; i < ints.size(); i++) {
             for (int j = i + 1; j < ints.size(); j++) {
@@ -33,7 +33,7 @@ public class Day1 extends Day {
     @Override
     public String resultPartTwo() {
         ArrayList<Integer> ints = new ArrayList<>();
-        input.forEach(s -> ints.add(Integer.parseInt(s)));
+        this.input.forEach(s -> ints.add(Integer.parseInt(s)));
         StringBuilder res = new StringBuilder();
         for (int i = 0; i < ints.size(); i++) {
             for (int j = i+1; j < ints.size(); j++) {
