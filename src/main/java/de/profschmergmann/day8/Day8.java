@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 public class Day8 extends Day {
 
     static int accumulator = 0;
-    private final ArrayList<InstructionLine> instructionLines;
+    private ArrayList<InstructionLine> instructionLines;
 
     public Day8() {
         super(8);
@@ -32,19 +32,43 @@ public class Day8 extends Day {
 
     @Override
     public String resultPartOne() {
-        this.executeInstructions();
+        this.executeInstructionsWithoutDuplicating();
         return String.valueOf(accumulator);
     }
 
     @Override
     public String resultPartTwo() {
-        int instructionNumberChanged;
-        while (!this.executeInstructions()) {
-            for (int i = 0; i < this.instructionLines.size(); i++) {
-                // TODO: Change an instruction from nop to jmp or jmp to nop and see if the program terminates
+        int instructionNumberChanged = -1;
+        boolean changed = false;
+        while (true) {
+            for (int i = instructionNumberChanged + 1; i < this.instructionLines.size(); i++) {
+                switch (this.instructionLines.get(i).instruction) {
+                    case jmp:
+                        this.instructionLines.get(i).changeInstruction(Instruction.nop);
+                        instructionNumberChanged = i;
+                        changed = true;
+                        break;
+                    case nop:
+                        this.instructionLines.get(i).changeInstruction(Instruction.jmp);
+                        instructionNumberChanged = i;
+                        changed = true;
+                        break;
+                    default:
+                        // do nothing
+                }
+                if (changed) {
+                    break;
+                }
             }
+            if (this.executeInstructionsWithoutDuplicating()) {
+                break;
+            }
+            this.instructionLines = new ArrayList<>();
+            this.readInstructions();
+            changed = false;
+            accumulator = 0;
         }
-        return null;
+        return String.valueOf(accumulator);
     }
 
     @Override
@@ -53,11 +77,11 @@ public class Day8 extends Day {
     }
 
     /**
-     * Executed all instructions and stops if a instruction would be executed twice.
+     * Executes all instructions and stops if a instruction would be executed twice.
      *
      * @return true if the program terminated correctly, false if not
      */
-    private boolean executeInstructions() {
+    private boolean executeInstructionsWithoutDuplicating() {
         boolean terminated = true;
         for (int i = 0; i < this.instructionLines.size(); ) {
             if (this.instructionLines.get(i).visited) {
@@ -104,6 +128,10 @@ public class Day8 extends Day {
             }
             return 0;
         }
+
+        void changeInstruction(Instruction newInstruction) {
+            this.instruction = newInstruction;
+        }
     }
 
     enum Instruction {
@@ -117,21 +145,6 @@ public class Day8 extends Day {
 
         String getText(Instruction instruction) {
             return instruction.text;
-        }
-
-        /**
-         * Checks if the given text is associated to a stored value.
-         *
-         * @param text the text to be checked
-         * @return the enum value
-         */
-        Instruction getValue(String text) {
-            for (Instruction instruction : Instruction.values()) {
-                if (this.getText(instruction).equals(text)) {
-                    return instruction;
-                }
-            }
-            return null;
         }
     }
 }
