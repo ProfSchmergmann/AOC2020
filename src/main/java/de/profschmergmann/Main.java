@@ -8,11 +8,12 @@ import de.profschmergmann.day5.Day5;
 import de.profschmergmann.day6.Day6;
 import de.profschmergmann.day7.Day7;
 import de.profschmergmann.day8.Day8;
+import de.profschmergmann.day9.Day9;
 
 public class Main {
 
     public static void main(String[] args) {
-        printResults(new Day8());
+        printResults(new Day9());
     }
 
     public static void printResults(Day day) {

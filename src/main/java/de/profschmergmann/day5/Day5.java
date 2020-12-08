@@ -72,7 +72,7 @@ public class Day5 extends Day {
         seatNumbers.sort(Comparator.comparingInt(o -> o));
         for (int i = 0; i < seatNumbers.size() - 1; i++) {
             int expected = seatNumbers.get(i) + 1;
-            int actual = seatNumbers.get(i+1);
+            int actual = seatNumbers.get(i + 1);
             if (expected != actual) {
                 seatID = expected;
             }

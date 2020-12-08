@@ -1,7 +1,6 @@
 package de.profschmergmann.day1;
 
 import de.profschmergmann.Day;
-import de.profschmergmann.Utilities;
 
 import java.util.ArrayList;
 
@@ -36,8 +35,8 @@ public class Day1 extends Day {
         this.input.forEach(s -> ints.add(Integer.parseInt(s)));
         StringBuilder res = new StringBuilder();
         for (int i = 0; i < ints.size(); i++) {
-            for (int j = i+1; j < ints.size(); j++) {
-                for (int k = j+1; k < ints.size(); k++) {
+            for (int j = i + 1; j < ints.size(); j++) {
+                for (int k = j + 1; k < ints.size(); k++) {
                     if (ints.get(i) + ints.get(j) + ints.get(k) == 2020) {
                         res.append(ints.get(i))
                                 .append(" * ")

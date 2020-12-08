@@ -87,7 +87,7 @@ public class Day7 extends Day {
             return false;
         }
 
-        boolean canHoldShinyGoldBag(){
+        boolean canHoldShinyGoldBag() {
             if (this.bags == null || this.bags.isEmpty()) {
                 return false;
             } else {

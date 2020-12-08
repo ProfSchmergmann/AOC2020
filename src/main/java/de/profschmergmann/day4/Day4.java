@@ -2,10 +2,11 @@ package de.profschmergmann.day4;
 
 import de.profschmergmann.Day;
 import lombok.Data;
+import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
-// TODO!
 public class Day4 extends Day {
 
     private final ArrayList<Passport> passports;
@@ -40,19 +41,19 @@ public class Day4 extends Day {
                     try {
                         passport.byr = Integer.parseInt(value);
                     } catch (NumberFormatException e) {
-                        // ignored
+                        Logger.getGlobal().severe("Cannot parse byr: " + value + " to int.");
                     }
                 } else if (attribute.matches("iyr")) {
                     try {
                         passport.iyr = Integer.parseInt(value);
                     } catch (NumberFormatException e) {
-                        // ignored
+                        Logger.getGlobal().severe("Cannot parse iyr: " + value + " to int.");
                     }
                 } else if (attribute.matches("eyr")) {
                     try {
                         passport.eyr = Integer.parseInt(value);
                     } catch (NumberFormatException e) {
-                        // ignored
+                        Logger.getGlobal().severe("Cannot parse eyr: " + value + " to int.");
                     }
                 } else if (attribute.matches("hgt")) {
                     passport.hgt = value;
@@ -61,16 +62,12 @@ public class Day4 extends Day {
                 } else if (attribute.matches("ecl")) {
                     passport.ecl = value;
                 } else if (attribute.matches("pid")) {
-                    try {
-                        passport.pid = Integer.parseInt(value);
-                    } catch (NumberFormatException e) {
-                        // ignored
-                    }
+                    passport.pid = value;
                 } else if (attribute.matches("cid")) {
                     try {
                         passport.cid = Integer.parseInt(value);
                     } catch (NumberFormatException e) {
-                        // ignored
+                        Logger.getGlobal().severe("Cannot parse cid: " + value + " to int.");
                     }
                 }
             });
@@ -82,7 +79,7 @@ public class Day4 extends Day {
     public String resultPartOne() {
         int counter = 0;
         for (Passport p : this.passports) {
-            if (p.isPassportValid()) {
+            if (p.isPassportValidPartOne()) {
                 counter++;
             }
         }
@@ -91,7 +88,14 @@ public class Day4 extends Day {
 
     @Override
     public String resultPartTwo() {
-        return null;
+        int counter = 0;
+        for (Passport p : this.passports) {
+            if (p.isPassportValidPartTwo()) {
+                System.out.println(p);
+                counter++;
+            }
+        }
+        return String.valueOf(counter);
     }
 
     @Override
@@ -107,17 +111,96 @@ public class Day4 extends Day {
         private String hgt;
         private String hcl;
         private String ecl;
-        private int pid;
+        private String pid;
         private int cid;
 
-        public boolean isPassportValid() {
+        public boolean isPassportValidPartOne() {
             return this.byr != 0 &&
                     this.iyr != 0 &&
                     this.eyr != 0 &&
-                    this.pid != 0 &&
                     this.hgt != null &&
                     this.hcl != null &&
-                    this.ecl != null;
+                    this.ecl != null &&
+                    this.pid != null;
+        }
+
+        public boolean isPassportValidPartTwo() {
+            if (this.isPassportValidPartOne()) {
+                if (this.byr < 1920 || this.byr > 2002) {
+                    return false;
+                }
+                if (this.iyr < 2010 || this.iyr > 2020) {
+                    return false;
+                }
+                if (this.eyr < 2020 || this.eyr > 2030) {
+                    return false;
+                }
+                if (this.hgt.endsWith("cm")) {
+                    try {
+                        int height = Integer.parseInt(this.hgt.split("cm")[0]);
+                        if (height < 150 || height > 193) {
+                            return false;
+                        }
+                    } catch (NumberFormatException e) {
+                        return false;
+                    }
+                } else if (this.hgt.endsWith("in")) {
+                    try {
+                        int height = Integer.parseInt(this.hgt.split("in")[0]);
+                        if (height < 59 || height > 76) {
+                            return false;
+                        }
+                    } catch (NumberFormatException e) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+                if (!this.hcl.startsWith("#")) {
+                    return false;
+                } else {
+                    String sub = this.hcl.substring(1);
+                    if (!(sub.matches("[0-9a-f]{6}"))) {
+                        return false;
+                    }
+                }
+                if (!EyeColor.matches(this.ecl)) {
+                    return false;
+                }
+                if (!this.pid.matches("[0-9]{9}")) {
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+
+        enum EyeColor {
+            amb("amb"),
+            blu("blu"),
+            brn("brn"),
+            gry("gry"),
+            grn("grn"),
+            hzl("hzl"),
+            oth("oth");
+
+            @Getter
+            private final String text;
+
+            EyeColor(String text) {
+                this.text = text;
+            }
+
+            static boolean matches(String text) {
+                boolean matches = false;
+                for (EyeColor eyeColor : values()) {
+                    if (eyeColor.getText().equals(text)) {
+                        matches = true;
+                        break;
+                    }
+                }
+                return matches;
+            }
         }
     }
 }
