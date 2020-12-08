@@ -7,11 +7,12 @@ import de.profschmergmann.day4.Day4;
 import de.profschmergmann.day5.Day5;
 import de.profschmergmann.day6.Day6;
 import de.profschmergmann.day7.Day7;
+import de.profschmergmann.day8.Day8;
 
 public class Main {
 
     public static void main(String[] args) {
-        printResults(new Day7());
+        printResults(new Day8());
     }
 
     public static void printResults(Day day) {
@@ -22,7 +23,7 @@ public class Main {
 
     private static Day[] createDayArray() {
         return new Day[]{new Day1(), new Day2(), new Day3(), new Day4(),
-                new Day5(), new Day6(), new Day7()};
+                new Day5(), new Day6(), new Day7(), new Day8()};
     }
 
 }
