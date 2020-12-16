@@ -29,7 +29,7 @@ public class Utilities {
                 filename = "src/main/java/de/profschmergmann/day" + numberOfDay + "/input.txt";
             }
             BufferedReader reader = new BufferedReader(new FileReader(filename));
-            reader.lines().forEachOrdered(res::add);
+            reader.lines().forEach(res::add);
             reader.close();
         } catch (IOException e) {
             Logger.getGlobal().info("Reading did not work.");
