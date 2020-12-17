@@ -3,6 +3,8 @@ package de.profschmergmann.day17;
 import de.profschmergmann.Day;
 
 public class Day17 extends Day {
+
+
     public Day17() {
         super(17);
     }
@@ -20,5 +22,13 @@ public class Day17 extends Day {
     @Override
     public int number() {
         return 17;
+    }
+
+    private static class Cube {
+        boolean active;
+        int x;
+        int y;
+        int z;
+
     }
 }
